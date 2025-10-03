@@ -220,6 +220,32 @@ go fmt ./...
 golangci-lint run
 ```
 
+## Database Schema
+
+The system uses PostgreSQL with two main tables:
+
+### `accounts` Table
+Stores account information and balances.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER PRIMARY KEY | Unique account identifier |
+| `balance` | DECIMAL(20,8) | Account balance with 8 decimal precision |
+| `created_at` | TIMESTAMP WITH TIME ZONE | Account creation timestamp |
+| `updated_at` | TIMESTAMP WITH TIME ZONE | Last update timestamp |
+
+### `transactions` Table
+Audit trail for all transfer transactions.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | SERIAL PRIMARY KEY | Auto-incrementing transaction ID |
+| `source_account_id` | INTEGER | Source account ID (FK to accounts.id) |
+| `destination_account_id` | INTEGER | Destination account ID (FK to accounts.id) |
+| `amount` | DECIMAL(20,8) | Transfer amount with 8 decimal precision |
+| `created_at` | TIMESTAMP WITH TIME ZONE | Transaction timestamp |
+| `updated_at` | TIMESTAMP WITH TIME ZONE | Last update timestamp |
+
 ## Environment Variables
 
 | Variable | Default | Description |
